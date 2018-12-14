@@ -53,6 +53,10 @@ function createLinkedList() {
       let penultimate;
 
       // Find a head node that points to a tail node of the same (Second to last item in list)
+      // From data perspective:
+      // { value: 'c',  next: { value: 'd', next: { value: 'e', next: null } } }
+      // Iterates until 'd' is found and the next value of 'd' is the current tail of
+      // { value: 'e', next: null }
       while (current) {
         if (current.next === this.tail) {
           penultimate = current;
@@ -63,20 +67,23 @@ function createLinkedList() {
         current = current.next;
       }
 
-      // pop the last item off the list,
-      // set the current tail,
-      // and decrement the length
+      // Set the second to last next to null
+      // Set the tail to the new end which is the old 2nd to last
+      // Set the length to - 1
       penultimate.next = null;
       this.tail = penultimate;
       this.length--;
 
       return node;
     },
+
     get(index) {
+      // Return null if index is non-existant
       if (index < 0 || index > this.length - 1) {
         return null;
       }
 
+      // always return head for index 0
       if (index === 0) {
         return this.head;
       }
@@ -84,6 +91,7 @@ function createLinkedList() {
       let current = this.head;
       let i = 0;
 
+      // iterate through the nodes until the index is found
       while (i < index) {
         i++;
         current = current.next;
@@ -93,10 +101,15 @@ function createLinkedList() {
     },
 
     delete(index) {
+      // null if index is non-existant
       if (index < 0 || index > this.length - 1) {
         return null;
       }
 
+      // if deleting the first node
+      // Hold the head as a variable;
+      // Change the new head to be the next
+      // reduce length by 1
       if (index === 0) {
         const deleted = this.head;
 
@@ -110,15 +123,20 @@ function createLinkedList() {
       let previous;
       let i = 0;
 
+      // Iterate through the indeces of the nodes
+      // hold onto the previous
       while (i < index) {
         i++;
         previous = current;
         current = current.next;
       }
 
+      // Return the delted item at the end
       const deleted = current;
+      // update the next of the previous to the deleted items next
       previous.next = current.next;
 
+      // If null then set the tail to the previous node
       if (previous.next === null) {
         this.tail = previous;
       }
@@ -156,5 +174,6 @@ console.log(list.tail);
 console.log(list.delete(1));
 console.log(list.print());
 
+// TODO: On your own
 // Cyclically linked list - tail points to the head
 // Doubly linked list - each node also points to the node previous to it
