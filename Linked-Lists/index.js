@@ -24,6 +24,9 @@ function createLinkedList() {
       }
 
       // All other items added beyond first
+      // Set next node on current node to the pushed node,
+      // set current tail to the pushed node,
+      // increase length
       this.tail.next = node;
       this.tail = node;
       this.length++;
@@ -148,7 +151,8 @@ const list = createLinkedList();
 const values = ['a', 'b', 'c', 'd', 'e'];
 const nodes = values.map(val => list.push(val));
 
-console.log(list);
+console.log(list.head);
+console.log(list.tail);
 console.log(list.delete(1));
 console.log(list.print());
 
